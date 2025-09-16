@@ -1,0 +1,358 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Rotary menu + OLED (SSD1306) + encoder TIM2 + PA2 switch
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "i2c.h"
+#include "gpio.h"
+#include "stdio.h"
+#include "string.h"
+#include <stdbool.h>
+
+#include "ssd1306_oled.h"
+#include "fonts.h"
+
+/* =================== UI Estados y Defines =================== */
+typedef enum {
+  ST_MAIN = 0,
+  ST_SUBMENU
+} UiState;
+
+#define OLED_W         SSD1306_WIDTH
+#define OLED_H         SSD1306_HEIGHT
+#define LINE_H         12                  // altura de renglón con Font_7x10
+#define MARGIN_X       6
+#define TITLE_Y        2
+#define MAIN_LIST_Y0   18                  // lista del menú principal
+#define SUB_LIST_Y0    4                   // lista del submenú (sin título)
+#define STAR_X         (OLED_W - Font_7x10.FontWidth)  // a la derecha
+
+#define SW_PORT        GPIOA               // pulsador del encoder
+#define SW_PIN         GPIO_PIN_2
+
+#define CLAMP(v,lo,hi)  ((v)<(lo)?(lo):((v)>(hi)?(hi):(v)))
+
+/* =================== Periféricos =================== */
+I2C_HandleTypeDef hi2c1;
+TIM_HandleTypeDef htim2;
+
+/* =================== Datos de Menú =================== */
+static const char* kMainItems[3] = {"Menu 1", "Menu 2", "Menu 3"};
+static const char* kSubItems[4]  = {"P1", "P2", "P3", "Volver"};
+
+static int presionPSI[3][3] = { {1,1,1}, {1,1,1}, {1,1,1} };
+
+static UiState state = ST_MAIN;
+static int mainIdx = 0;       // 0..2
+static int subIdx  = 0;       // 0..3 (3 = Volver)
+static int curMenu = 0;       // seleccionado en ST_MAIN
+
+// Edición inline dentro del submenú
+static bool editing = false;  // true si se está editando una presión
+static int  editIdx = -1;     // 0..2 => P1..P3
+
+/* =================== Encoder & Switch =================== */
+// --- CUANTIZADOR por detent ---
+#define ENC_COUNTS_PER_STEP  4   // 4 cuentas por “clic” en modo x4 (típico encoder mecánico)
+static int16_t enc_last_raw = 0;
+static int     enc_acc      = 0;
+
+static int enc_step(void) {
+  int16_t raw  = (int16_t)__HAL_TIM_GET_COUNTER(&htim2);
+  int16_t diff = raw - enc_last_raw;  // wrap-around ok en int16
+  enc_last_raw = raw;
+
+  enc_acc += diff;
+
+  int step = 0;
+  while (enc_acc >= ENC_COUNTS_PER_STEP) { step++; enc_acc -= ENC_COUNTS_PER_STEP; }
+  while (enc_acc <= -ENC_COUNTS_PER_STEP){ step--; enc_acc += ENC_COUNTS_PER_STEP; }
+
+  return step;   // -N..0..+N (usualmente -1/0/+1)
+}
+
+// Debounce del pulsador
+static uint8_t  swStable = 1;             // 1 = released (pull-up)
+static uint32_t swLastChange = 0;
+static const uint32_t SW_DEBOUNCE_MS = 20;
+static uint32_t lastPressTime = 0;        // anti-autorepeat
+
+/* =================== Buffers =================== */
+static char line[32];
+
+/* =================== Prototipos =================== */
+void SystemClock_Config(void);
+void MX_GPIO_Init(void);
+void MX_I2C1_Init(void);
+static void MX_TIM2_Init(void);
+
+/* =================== Switch =================== */
+static bool sw_pressed_edge(void) {
+  // activo en 0 (pull-up)
+  uint8_t raw = (HAL_GPIO_ReadPin(SW_PORT, SW_PIN) == GPIO_PIN_SET) ? 1 : 0;
+
+  if (raw != swStable) {
+    if (HAL_GetTick() - swLastChange >= SW_DEBOUNCE_MS) {
+      swStable = raw;
+      swLastChange = HAL_GetTick();
+      if (swStable == 0) { // flanco de bajada = pressed
+        if (HAL_GetTick() - lastPressTime > 150) {
+          lastPressTime = HAL_GetTick();
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+/* =================== Dibujo =================== */
+static void draw_title(const char* txt) {
+  SSD1306_GotoXY(MARGIN_X, TITLE_Y);
+  SSD1306_Puts((char*)txt, &Font_11x18, WHITE);
+}
+
+static void draw_item(int y0, const char* left, const char* right, bool selected, bool star) {
+  SSD1306_GotoXY(MARGIN_X, y0);
+  if (selected) {
+    SSD1306_Puts(">", &Font_7x10, WHITE);
+    SSD1306_GotoXY(MARGIN_X + Font_7x10.FontWidth + 2, y0);
+  }
+  SSD1306_Puts((char*)left, &Font_7x10, WHITE);
+
+  if (right && *right) {
+    SSD1306_Puts(" ", &Font_7x10, WHITE);
+    SSD1306_Puts((char*)right, &Font_7x10, WHITE);
+  }
+
+  if (star) {
+    SSD1306_GotoXY(STAR_X, y0);
+    SSD1306_Puts("*", &Font_7x10, WHITE);
+  }
+}
+
+static void screen_main(void) {
+  SSD1306_Clear();
+  draw_title("Bienvenido");
+  for (int i=0;i<3;i++) {
+    int y = MAIN_LIST_Y0 + i*LINE_H;
+    draw_item(y, kMainItems[i], NULL, i==mainIdx, false);
+  }
+  SSD1306_UpdateScreen();
+}
+
+static void screen_submenu(void) {
+  SSD1306_Clear(); // SIN título => más espacio
+  for (int i=0;i<4;i++) {
+    int y = SUB_LIST_Y0 + i*LINE_H;
+    if (i <= 2) {
+      snprintf(line, sizeof(line), ": %d PSI", presionPSI[curMenu][i]);
+      bool star = (editing && editIdx == i);
+      draw_item(y, kSubItems[i], line, i==subIdx, star);
+    } else {
+      draw_item(y, "Volver", NULL, i==subIdx, false);
+    }
+  }
+  SSD1306_UpdateScreen();
+}
+
+/* =================== Main =================== */
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+
+  MX_GPIO_Init();
+  MX_I2C1_Init();
+  SSD1306_Init();
+  MX_TIM2_Init();
+
+  // Resetear contador para alinear cuantización
+  __HAL_TIM_SET_COUNTER(&htim2, 0);
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+  enc_last_raw = 0;   // alineado con el reset
+
+  screen_main();
+
+  while (1)
+  {
+    int  d     = enc_step();          // cuantizado por detent
+    bool press = sw_pressed_edge();
+
+    switch (state) {
+
+      case ST_MAIN: {
+        if (d != 0) {
+          mainIdx = CLAMP(mainIdx + (d>0 ? 1 : -1), 0, 2);
+          screen_main();
+        }
+        if (press) {
+          curMenu = mainIdx;
+          subIdx  = 0;
+          editing = false;
+          editIdx = -1;
+          screen_submenu();
+          state = ST_SUBMENU;
+        }
+      } break;
+
+      case ST_SUBMENU: {
+        if (!editing) {
+          // Navegación normal entre P1/P2/P3/Volver
+          if (d != 0) {
+            subIdx = CLAMP(subIdx + (d>0 ? 1 : -1), 0, 3);
+            screen_submenu();
+          }
+          if (press) {
+            if (subIdx == 3) {
+              // Volver al principal
+              screen_main();
+              state = ST_MAIN;
+            } else {
+              // Entrar a editar la presión seleccionada
+              editing = true;
+              editIdx = subIdx;       // 0..2
+              screen_submenu();       // un "*" a la derecha
+            }
+          }
+        } else {
+          // EDITANDO: el encoder SOLO cambia el valor; NO mueve la selección
+          if (d != 0) {
+            int v = presionPSI[curMenu][editIdx];
+            v += (d>0 ? 1 : -1);
+            if (v < 0) v = 0;         // límite: >= 0 PSI
+            presionPSI[curMenu][editIdx] = v;
+            screen_submenu();         // refrescar valor y mantener "*"
+          }
+          if (press) {
+            // Guardar y salir de edición
+            editing = false;
+            editIdx = -1;
+            screen_submenu();         // quita el "*"
+          }
+        }
+      } break;
+    }
+
+    HAL_Delay(30); // ritmo de escaneo + anti-rebote suave
+  }
+}
+
+/* =================== ST code generado (ajusta a tu proyecto) =================== */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  // 72 MHz desde HSE * 9
+  RCC_OscInitStruct.OscillatorType      = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState            = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue      = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState            = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState        = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource       = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL          = RCC_PLL_MUL9;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) { Error_Handler(); }
+
+  RCC_ClkInitStruct.ClockType      = RCC_CLOCKTYPE_HCLK
+                                   | RCC_CLOCKTYPE_SYSCLK
+                                   | RCC_CLOCKTYPE_PCLK1
+                                   | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource   = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider  = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) { Error_Handler(); }
+}
+
+void MX_I2C1_Init(void)
+{
+  hi2c1.Instance             = I2C1;
+  hi2c1.Init.ClockSpeed      = 400000;
+  hi2c1.Init.DutyCycle       = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1     = 0;
+  hi2c1.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2     = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode   = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK) { Error_Handler(); }
+}
+
+static void MX_TIM2_Init(void)
+{
+  TIM_Encoder_InitTypeDef sConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler         = 0;
+  htim2.Init.CounterMode       = TIM_COUNTERMODE_UP;
+  htim2.Init.Period            = 65535;
+  htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+
+  sConfig.EncoderMode    = TIM_ENCODERMODE_TI12;
+
+  // Flancos en RISING + Filtro digital para matar rebotes
+  sConfig.IC1Polarity    = TIM_ICPOLARITY_RISING;
+  sConfig.IC1Selection   = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC1Prescaler   = TIM_ICPSC_DIV1;
+  sConfig.IC1Filter      = 10;   // probá 10..12..15 si sigue rebotando
+
+  sConfig.IC2Polarity    = TIM_ICPOLARITY_RISING;
+  sConfig.IC2Selection   = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC2Prescaler   = TIM_ICPSC_DIV1;
+  sConfig.IC2Filter      = 10;
+
+  if (HAL_TIM_Encoder_Init(&htim2, &sConfig) != HAL_OK) { Error_Handler(); }
+
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK) { Error_Handler(); }
+}
+
+void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  // Switch del encoder (PA2) pull-up
+  GPIO_InitStruct.Pin  = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+}
+
+void Error_Handler(void)
+{
+  __disable_irq();
+  while (1) { }
+}
+
+
+
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */

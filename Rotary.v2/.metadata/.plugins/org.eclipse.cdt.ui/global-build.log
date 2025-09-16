@@ -1,0 +1,185 @@
+11:04:15 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/fonts.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/fonts.d" -MT"Core/Src/fonts.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fonts.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/ssd1306_oled.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/ssd1306_oled.d" -MT"Core/Src/ssd1306_oled.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/ssd1306_oled.o"
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_hal_msp.d" -MT"Core/Src/stm32f1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f1xx_it.d" -MT"Core/Src/stm32f1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_it.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  15972	    100	   3116	  19188	   4af4	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+11:04:21 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-size  Rotary.elf 
+   text	   data	    bss	    dec	    hex	filename
+  15972	    100	   3116	  19188	   4af4	Rotary.elf
+Finished building: default.size.stdout
+ 
+11:12:41 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  16168	    100	   3140	  19408	   4bd0	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+11:15:28 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  16168	    100	   3140	  19408	   4bd0	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+11:17:20 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:148:59: warning: 'Switch: No presionado' directive writing 21 bytes into a region of size 20 [-Wformat-overflow=]
+  148 |               sprintf(switch_status, "Switch: No presionado");
+      |                                       ~~~~~~~~~~~~~~~~~~~~^
+../Core/Src/main.c:148:15: note: 'sprintf' output 22 bytes into a destination of size 20
+  148 |               sprintf(switch_status, "Switch: No presionado");
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  16176	    100	   3140	  19416	   4bd8	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+11:18:02 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  16176	    100	   3148	  19424	   4be0	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+11:19:20 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  16168	    100	   3140	  19408	   4bd0	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+23:19:06 **** Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2025\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  16168	    100	   3140	  19408	   4bd0	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+23:38:17 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'screen_edit':
+../Core/Src/main.c:152:47: warning: '%d' directive output may be truncated writing between 1 and 11 bytes into a region of size between 9 and 19 [-Wformat-truncation=]
+  152 |   snprintf(line, sizeof(line), "Menu %d / Sub %d", curMenu+1, curSub+1);
+      |                                               ^~
+../Core/Src/main.c:152:32: note: directive argument in the range [-2147483647, 2147483647]
+  152 |   snprintf(line, sizeof(line), "Menu %d / Sub %d", curMenu+1, curSub+1);
+      |                                ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:152:3: note: 'snprintf' output between 15 and 35 bytes into a destination of size 32
+  152 |   snprintf(line, sizeof(line), "Menu %d / Sub %d", curMenu+1, curSub+1);
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2025\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  20576	    176	   3152	  23904	   5d60	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+23:47:32 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'SystemClock_Config':
+../Core/Src/main.c:267:20: error: 'RCC_OscInitTypeDef' has no member named 'PLLMUL'
+  267 |   RCC_OscInitStruct.PLLMUL = RCC_PLL_MUL9;
+      |                    ^
+make: *** [Core/Src/subdir.mk:40: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+23:47:46 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'SystemClock_Config':
+../Core/Src/main.c:267:20: error: 'RCC_OscInitTypeDef' has no member named 'PLLMUL'
+  267 |   RCC_OscInitStruct.PLLMUL = RCC_PLL_MUL9;
+      |                    ^
+make: *** [Core/Src/subdir.mk:40: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+23:50:04 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2025\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  20520	    180	   3148	  23848	   5d28	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 
+23:58:34 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Rotary.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2025\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Rotary\Rotary\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Rotary.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Rotary.elf
+ 
+arm-none-eabi-size  Rotary.elf 
+arm-none-eabi-objdump -h -S Rotary.elf  > "Rotary.list"
+   text	   data	    bss	    dec	    hex	filename
+  20560	    180	   3156	  23896	   5d58	Rotary.elf
+Finished building: default.size.stdout
+ 
+Finished building: Rotary.list
+ 

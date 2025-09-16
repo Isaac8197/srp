@@ -1,0 +1,4 @@
+../Core/Src/max6675.c:4:9:MAX6675_pulso	1
+../Core/Src/max6675.c:15:6:MAX6675_init	1
+../Core/Src/max6675.c:28:7:MAX6675_lee_cs	4
+../Core/Src/max6675.c:55:7:MAX6675_lee	1

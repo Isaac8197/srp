@@ -1,0 +1,6 @@
+../Core/Src/delays.c:11:6:delay_us_C	24	static
+../Core/Src/delays.c:23:6:delay_us_ASM	16	static,ignoring_inline_asm
+../Core/Src/delays.c:39:6:delay_us_ASM_IT	16	static,ignoring_inline_asm
+../Core/Src/delays.c:68:6:delay_us_dwt_init	8	static
+../Core/Src/delays.c:74:6:delay_us_dwt	16	static
+../Core/Src/delays.c:81:6:Delay_ms	24	static

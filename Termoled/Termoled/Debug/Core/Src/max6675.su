@@ -1,0 +1,3 @@
+../Core/Src/max6675.c:11:6:MAX6675_init	8	static
+../Core/Src/max6675.c:19:9:MAX6675_pulso	16	static
+../Core/Src/max6675.c:30:7:MAX6675_lee	16	static

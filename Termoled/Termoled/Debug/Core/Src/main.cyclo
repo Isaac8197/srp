@@ -1,0 +1,12 @@
+../Core/Src/main.c:96:6:Leer_Termocupla	2
+../Core/Src/main.c:107:6:Leer_Encoder	4
+../Core/Src/main.c:120:6:Control_PID	4
+../Core/Src/main.c:144:6:Mostrar_Pantalla	1
+../Core/Src/main.c:169:5:main	1
+../Core/Src/main.c:223:6:SystemClock_Config	3
+../Core/Src/main.c:264:6:MX_I2C1_Init	2
+../Core/Src/main.c:294:13:MX_TIM2_Init	3
+../Core/Src/main.c:343:13:MX_TIM3_Init	4
+../Core/Src/main.c:393:6:MX_USART1_UART_Init	2
+../Core/Src/main.c:426:6:MX_GPIO_Init	1
+../Core/Src/main.c:491:6:Error_Handler	1

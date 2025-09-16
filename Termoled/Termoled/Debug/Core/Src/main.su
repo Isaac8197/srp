@@ -1,0 +1,12 @@
+../Core/Src/main.c:96:6:Leer_Termocupla	8	static
+../Core/Src/main.c:107:6:Leer_Encoder	4	static
+../Core/Src/main.c:120:6:Control_PID	24	static
+../Core/Src/main.c:144:6:Mostrar_Pantalla	112	static
+../Core/Src/main.c:169:5:main	8	static
+../Core/Src/main.c:223:6:SystemClock_Config	72	static
+../Core/Src/main.c:264:6:MX_I2C1_Init	8	static
+../Core/Src/main.c:294:13:MX_TIM2_Init	56	static
+../Core/Src/main.c:343:13:MX_TIM3_Init	48	static
+../Core/Src/main.c:393:6:MX_USART1_UART_Init	8	static
+../Core/Src/main.c:426:6:MX_GPIO_Init	32	static
+../Core/Src/main.c:491:6:Error_Handler	4	static,ignoring_inline_asm

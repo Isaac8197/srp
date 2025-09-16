@@ -1,0 +1,131 @@
+19:42:53 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  18764	    100	   3356	  22220	   56cc	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 
+19:43:06 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-size  Cupled.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18764	    100	   3356	  22220	   56cc	Cupled.elf
+Finished building: default.size.stdout
+ 
+19:44:00 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  37576	    476	   3364	  41416	   a1c8	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 
+19:44:25 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-size  Cupled.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37576	    476	   3364	  41416	   a1c8	Cupled.elf
+Finished building: default.size.stdout
+ 
+19:45:20 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  37616	    476	   3364	  41456	   a1f0	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 
+19:46:35 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/gpio.o"
+../Core/Src/gpio.c: In function 'MX_GPIO_Init':
+../Core/Src/gpio.c:56:3: error: 'GPIO_InitStruct' undeclared (first use in this function)
+   56 |   GPIO_InitStruct.Pin = DAT_MAX_Pin;
+      |   ^~~~~~~~~~~~~~~
+../Core/Src/gpio.c:56:3: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:64: Core/Src/gpio.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+19:47:23 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/gpio.o"
+../Core/Src/gpio.c: In function 'MX_GPIO_Init':
+../Core/Src/gpio.c:56:3: error: 'GPIO_InitStruct' undeclared (first use in this function)
+   56 |   GPIO_InitStruct.Pin = DAT_MAX_Pin;
+      |   ^~~~~~~~~~~~~~~
+../Core/Src/gpio.c:56:3: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:64: Core/Src/gpio.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+19:48:01 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  37696	    476	   3364	  41536	   a240	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 
+19:49:25 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/usart.o"
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  37696	    476	   3364	  41536	   a240	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 
+19:51:03 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  37768	    476	   3364	  41608	   a288	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 
+19:55:04 **** Incremental Build of configuration Debug for project Cupled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Cupled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Cupled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Cupled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Cupled.elf
+ 
+arm-none-eabi-size  Cupled.elf 
+arm-none-eabi-objdump -h -S Cupled.elf  > "Cupled.list"
+   text	   data	    bss	    dec	    hex	filename
+  37776	    476	   3364	  41616	   a290	Cupled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Cupled.list
+ 

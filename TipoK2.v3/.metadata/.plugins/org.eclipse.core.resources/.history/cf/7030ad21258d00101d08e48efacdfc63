@@ -1,0 +1,68 @@
+/*
+ * max6675.c
+ *  Created on: Apr 9, 2023
+ *      Author: Alcides Ramos
+ */
+#include "max6675.h"
+#include <math.h>   // opcional: para devolver NAN en termocupla abierta
+
+void MAX6675_init(void)
+{
+    /* CK en 0, TODOS los CS en inactivo (alto) */
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(CS_MAX_GPIO_Port,  CS_MAX_Pin,  GPIO_PIN_SET);
+#ifdef CS2_MAX_Pin
+    HAL_GPIO_WritePin(CS2_MAX_GPIO_Port, CS2_MAX_Pin, GPIO_PIN_SET);
+#endif
+#ifdef CS3_MAX_Pin
+    HAL_GPIO_WritePin(CS3_MAX_GPIO_Port, CS3_MAX_Pin, GPIO_PIN_SET);
+#endif
+    HAL_Delay(100);
+}
+
+uint8_t MAX6675_pulso(void)
+{
+    uint8_t lei;
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_SET);
+    Delay_us(10);
+    lei = HAL_GPIO_ReadPin(DAT_MAX_GPIO_Port, DAT_MAX_Pin);
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_RESET);
+    Delay_us(10);
+    return lei;
+}
+
+/* Lectura indicando el CS (sirve para cualquier cantidad de sensores en el bus) */
+float MAX6675_lee_cs(GPIO_TypeDef *cs_port, uint16_t cs_pin)
+{
+    uint16_t raw = 0;
+
+    /* Asegurar que TODOS los CS están en alto; bajar SOLO el requerido */
+    HAL_GPIO_WritePin(CS_MAX_GPIO_Port,  CS_MAX_Pin,  GPIO_PIN_SET);
+#ifdef CS2_MAX_Pin
+    HAL_GPIO_WritePin(CS2_MAX_GPIO_Port, CS2_MAX_Pin, GPIO_PIN_SET);
+#endif
+#ifdef CS3_MAX_Pin
+    HAL_GPIO_WritePin(CS3_MAX_GPIO_Port, CS3_MAX_Pin, GPIO_PIN_SET);
+#endif
+    HAL_GPIO_WritePin(cs_port, cs_pin, GPIO_PIN_RESET);
+
+    for (int8_t i = 15; i >= 0; i--) {
+        if (MAX6675_pulso()) raw |= (uint16_t)(1u << i);
+    }
+
+    HAL_GPIO_WritePin(cs_port, cs_pin, GPIO_PIN_SET);
+
+    /* Bit D2 = 1 -> termocupla abierta: devolver NaN (opcional) */
+    if (raw & 0x0004u) {
+        return NAN;
+    }
+
+    raw >>= 3;                /* descartar D2..D0 */
+    return (float)raw * 0.25f;/* 0.25 °C/LSB */
+}
+
+/* Compatibilidad: lee el “sensor 1” (CS_MAX) */
+float MAX6675_lee(void)
+{
+    return MAX6675_lee_cs(CS_MAX_GPIO_Port, CS_MAX_Pin);
+}

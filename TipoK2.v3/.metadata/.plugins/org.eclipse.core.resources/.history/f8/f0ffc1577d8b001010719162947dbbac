@@ -1,0 +1,25 @@
+/* max6675.h */
+#ifndef LIBRERIAS_MAX6675_H_
+#define LIBRERIAS_MAX6675_H_
+
+#include "main.h"
+#include "delays.h"
+
+typedef struct {
+    GPIO_TypeDef *cs_port;
+    uint16_t cs_pin;
+} max6675_t;
+
+// Inicializa el bus compartido (CK/DAT en estado seguro)
+void MAX6675_BusInit(void);
+
+// Inicializa la instancia (solo guarda el CS)
+static inline void MAX6675_InitDev(max6675_t *dev, GPIO_TypeDef *port, uint16_t pin) {
+    dev->cs_port = port;
+    dev->cs_pin  = pin;
+}
+
+// Lee temperatura de un dispositivo puntual
+float MAX6675_Read(const max6675_t *dev);
+
+#endif /* LIBRERIAS_MAX6675_H_ */

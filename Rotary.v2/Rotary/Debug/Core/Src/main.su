@@ -1,0 +1,12 @@
+../Core/Src/main.c:65:12:enc_step	16	static
+../Core/Src/main.c:95:13:sw_pressed_edge	16	static
+../Core/Src/main.c:115:13:draw_title	16	static
+../Core/Src/main.c:120:13:draw_item	24	static
+../Core/Src/main.c:139:13:screen_main	24	static
+../Core/Src/main.c:149:13:screen_submenu	32	static
+../Core/Src/main.c:165:5:main	24	static
+../Core/Src/main.c:247:6:SystemClock_Config	72	static
+../Core/Src/main.c:273:6:MX_I2C1_Init	8	static
+../Core/Src/main.c:287:13:MX_TIM2_Init	56	static
+../Core/Src/main.c:319:6:MX_GPIO_Init	40	static
+../Core/Src/main.c:334:6:Error_Handler	4	static,ignoring_inline_asm

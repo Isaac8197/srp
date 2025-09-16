@@ -1,0 +1,10 @@
+23:49:26 **** Incremental Build of configuration Debug for project Rotary ****
+make -j12 all 
+arm-none-eabi-size  Rotary.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37720	    476	   3108	  41304	   a158	Rotary.elf
+Finished building: default.size.stdout
+ 
+
+23:49:26 Build Finished. 0 errors, 0 warnings. (took 192ms)
+

@@ -1,0 +1,55 @@
+/* max6675.c */
+#include "max6675.h"
+
+static uint8_t MAX6675_Pulso(void)
+{
+    uint8_t bit;
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_SET);
+    Delay_us(10);
+    bit = (uint8_t)HAL_GPIO_ReadPin(DAT_MAX_GPIO_Port, DAT_MAX_Pin);
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_RESET);
+    Delay_us(10);
+    return bit;
+}
+
+void MAX6675_BusInit(void)
+{
+    // CK en 0, ambos CS en 1 (inactivos). No bloquea con HAL_Delay largo.
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_RESET);
+    // Nota: los CS se dejan en 1 desde MX_GPIO_Init().
+    // Si querés asegurarlo acá para los definidos:
+#ifdef CS_MAX_Pin
+    HAL_GPIO_WritePin(CS_MAX_GPIO_Port, CS_MAX_Pin, GPIO_PIN_SET);
+#endif
+#ifdef CS2_MAX_Pin
+    HAL_GPIO_WritePin(CS2_MAX_GPIO_Port, CS2_MAX_Pin, GPIO_PIN_SET);
+#endif
+    // Pequeña espera para estabilidad del bus
+    Delay_us(100);
+}
+
+float MAX6675_Read(const max6675_t *dev)
+{
+    uint16_t raw = 0;
+    int8_t i;
+
+    // Selecciona SOLO este dispositivo
+    HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, GPIO_PIN_RESET);
+    Delay_us(5);
+
+    // 16 pulsos; se ignoran los 3 LSB (ver hoja de datos)
+    for (i = 15; i >= 0; i--) {
+        if (MAX6675_Pulso()) raw |= (1u << i);
+    }
+
+    // Desseleccionar
+    HAL_GPIO_WritePin(dev->cs_port, dev->cs_pin, GPIO_PIN_SET);
+
+    // Bit D2 = "OC" (termopar abierto). Si está en 1, no hay termopar.
+    if (raw & 0x0004) {
+        return NAN; // opcional: señalizá error
+    }
+
+    raw >>= 3;                 // descarta D2..D0
+    return ((float)raw) * 0.25f; // 0.25 °C por LSB
+}

@@ -1,0 +1,22 @@
+/*
+ * max6675.h
+ *  Created on: Apr 9, 2023
+ *      Author: Alcides Ramos
+ */
+
+#ifndef LIBRERIAS_MAX6675_H_
+#define LIBRERIAS_MAX6675_H_
+
+#include "main.h"
+#include "delays.h"
+
+/* API original (se mantiene) */
+void    MAX6675_init(void);
+uint8_t MAX6675_pulso(void);
+float   MAX6675_lee(void);
+
+/* === NUEVO: lectura especificando el CS (para 2 o más sensores en el mismo bus) */
+float   MAX6675_lee_cs(GPIO_TypeDef *cs_port, uint16_t cs_pin);
+/* =============================================================================== */
+
+#endif /* LIBRERIAS_MAX6675_H_ */

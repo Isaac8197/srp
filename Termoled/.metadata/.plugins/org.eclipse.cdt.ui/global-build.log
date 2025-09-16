@@ -1,0 +1,35 @@
+18:54:39 **** Incremental Build of configuration Debug for project Termoled ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Termoled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Termoled\Termoled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Termoled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Termoled.elf
+ 
+arm-none-eabi-size  Termoled.elf 
+arm-none-eabi-objdump -h -S Termoled.elf  > "Termoled.list"
+   text	   data	    bss	    dec	    hex	filename
+  42256	    492	   3268	  46016	   b3c0	Termoled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Termoled.list
+ 
+18:54:42 **** Incremental Build of configuration Debug for project Termoled ****
+make -j8 all 
+arm-none-eabi-size  Termoled.elf 
+   text	   data	    bss	    dec	    hex	filename
+  42256	    492	   3268	  46016	   b3c0	Termoled.elf
+Finished building: default.size.stdout
+ 
+01:15:40 **** Incremental Build of configuration Debug for project Termoled ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "Termoled.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\isaac\Desktop\UCC_2024\Segundo Semestre\Software de Sistemas Embebidos\STM32\Termoled\Termoled\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Termoled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: Termoled.elf
+ 
+arm-none-eabi-size  Termoled.elf 
+arm-none-eabi-objdump -h -S Termoled.elf  > "Termoled.list"
+   text	   data	    bss	    dec	    hex	filename
+  42280	    492	   3268	  46040	   b3d8	Termoled.elf
+Finished building: default.size.stdout
+ 
+Finished building: Termoled.list
+ 

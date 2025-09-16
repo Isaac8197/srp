@@ -1,0 +1,57 @@
+/*
+ * max6675.c
+ */
+
+#include "max6675.h"
+
+void MAX6675_init(void)
+{
+    /* CK en 0, ambos CS en alto (inactivos) */
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(CS_MAX_GPIO_Port,  CS_MAX_Pin,  GPIO_PIN_SET);
+    HAL_GPIO_WritePin(CS2_MAX_GPIO_Port, CS2_MAX_Pin, GPIO_PIN_SET);
+    Delay_ms(100);
+}
+
+uint8_t MAX6675_pulso(void)
+{
+    uint8_t bit;
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_SET);
+    Delay_us(10);
+    bit = (uint8_t)HAL_GPIO_ReadPin(DAT_MAX_GPIO_Port, DAT_MAX_Pin);
+    HAL_GPIO_WritePin(CK_MAX_GPIO_Port, CK_MAX_Pin, GPIO_PIN_RESET);
+    Delay_us(10);
+    return bit;
+}
+
+/* Lectura con CS parametrizable (comparten CK/DAT) */
+float MAX6675_lee_cs(GPIO_TypeDef *cs_port, uint16_t cs_pin)
+{
+    uint16_t raw = 0;
+    int8_t   i;
+
+    /* Asegurar ambos CS en alto; bajar solo el requerido */
+    HAL_GPIO_WritePin(CS_MAX_GPIO_Port,  CS_MAX_Pin,  GPIO_PIN_SET);
+    HAL_GPIO_WritePin(CS2_MAX_GPIO_Port, CS2_MAX_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(cs_port, cs_pin, GPIO_PIN_RESET);
+
+    for (i = 15; i >= 0; i--) {
+        if (MAX6675_pulso()) raw |= (uint16_t)(1u << i);
+    }
+
+    HAL_GPIO_WritePin(cs_port, cs_pin, GPIO_PIN_SET);
+
+    /* D2 = 1 => termocupla abierta */
+    if (raw & 0x0004) {
+        return NAN;
+    }
+
+    raw >>= 3;                  /* descartar D2..D0 */
+    return (float)raw * 0.25f;  /* 0.25 °C/LSB */
+}
+
+/* Compatibilidad: lee el sensor 1 (CS_MAX) */
+float MAX6675_lee(void)
+{
+    return MAX6675_lee_cs(CS_MAX_GPIO_Port, CS_MAX_Pin);
+}

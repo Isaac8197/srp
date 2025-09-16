@@ -1,0 +1,27 @@
+/*
+ * max6675.h
+ */
+
+#ifndef LIBRERIAS_MAX6675_H_
+#define LIBRERIAS_MAX6675_H_
+
+#include "main.h"
+#include "delays.h"
+#include <math.h>   // isnan
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void    MAX6675_init(void);
+uint8_t MAX6675_pulso(void);
+float   MAX6675_lee(void);  // alias a sensor 1 (CS_MAX)
+
+/* Lectura indicando el CS (para múltiples sensores) */
+float   MAX6675_lee_cs(GPIO_TypeDef *cs_port, uint16_t cs_pin);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* LIBRERIAS_MAX6675_H_ */
